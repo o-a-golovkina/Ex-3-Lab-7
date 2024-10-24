@@ -303,6 +303,19 @@ namespace Lab_7
                 Console.WriteLine(result);
             }
         }
+
+        public void SaveToFileCSV(List<Patient> patients, string path)
+        {
+            List<string> lines = new List<string>();
+            foreach (Patient item in patients)
+                lines.Add(item.ToString());
+            try
+            {
+                File.WriteAllLines(path, lines);
+                Console.WriteLine($"Check out the CSV file at: {Path.GetFullPath(path)}");
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
     }
 }
 

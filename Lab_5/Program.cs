@@ -195,19 +195,25 @@
                             repeat = false;
                             try
                             {
-                                Console.WriteLine("\nChoose the type of file:\n" +
+                                Console.Write("\nChoose the type of file:\n" +
                                           " 1 - CSV\n" +
                                           " 2 - JSON\n" +
                                           "Answer --> ");
-                                ans = int.Parse(Console.ReadLine());
+                                ans = int.Parse(Console.ReadLine()!);
                                 if (ans == 1)
-                                    /*Function for csv*/;
-                                else if (ans == 2)
-                                    /*Function for json*/;
+                                {
+                                    Console.Write("Input the file name for saving (*.csv) --> ");
+                                    string? pathcsv = Console.ReadLine();
+                                    if (!string.IsNullOrEmpty(pathcsv) && pathcsv.Contains(".csv"))
+                                        function.SaveToFileCSV(patients, pathcsv);
+                                    else throw new Exception();
+                                }
+                                //else if (ans == 2)
+                                //    /*Function for json*/
                                 else
                                     throw new Exception();
                             }
-                            catch (Exception) { Console.WriteLine("Incorrect input. Try again!"); repeat = true; }
+                            catch (Exception) { Console.WriteLine("\nIncorrect input. Try again!"); repeat = true; }
                         } while (repeat);
                         break;
 
