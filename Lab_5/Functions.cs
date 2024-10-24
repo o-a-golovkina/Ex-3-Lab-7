@@ -139,7 +139,7 @@ namespace Lab_7
                     Console.WriteLine("-----------------------------------------------");
                     Console.Write("\nInput a string with data of patient (name;surname;age;number;type;code) --> ");
                     string? str = Console.ReadLine();
-                    bool result = Patient.TryParse(str!, out Patient patient,patients);
+                    bool result = Patient.TryParse(str!, out Patient patient, patients);
                     if (patient == null) throw new ArgumentException();
                     if (result)
                     {
@@ -331,6 +331,26 @@ namespace Lab_7
                 Console.WriteLine($"Check out the JSON file at: {Path.GetFullPath(path)}");
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+
+        public List<Patient> ReadFromFileCSV(string path)
+        {
+            List<Patient> patients = new List<Patient>();
+            try
+            {
+                List<string> lines = new List<string>();
+                lines = File.ReadAllLines(path).ToList();
+                foreach (string item in lines)
+                {
+                    bool result = Patient.TryParse(item, out Patient patient, patients);
+                    if (result)
+                        patients.Add(patient);
+                }
+            }
+            catch (IOException ex) { Console.WriteLine("Reading file error: " + ex.Message); }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+            return patients;
         }
     }
 }

@@ -220,6 +220,33 @@
                         } while (repeat);
                         break;
 
+                    case 8:
+                        do
+                        {
+                            repeat = false;
+                            try
+                            {
+                                Console.Write("\nChoose the type of file:\n" +
+                                          " 1 - CSV\n" +
+                                          " 2 - JSON\n" +
+                                          "Answer --> ");
+                                ans = int.Parse(Console.ReadLine()!);
+                                if (ans == 1)
+                                {
+                                    Console.Write("Input the file name for reading (*.csv) --> ");
+                                    string? pathcsv = Console.ReadLine();
+                                    if (!string.IsNullOrEmpty(pathcsv) && pathcsv.Contains(".csv"))
+                                    {
+                                        patients = function.ReadFromFileCSV(pathcsv);
+                                        Console.WriteLine("\nObjects from the file were added to collection!");
+                                    }
+                                    else throw new Exception();
+                                }
+                            }
+                            catch (Exception) { Console.WriteLine("\nIncorrect input. Try again!"); repeat = true; }
+                        } while (repeat);
+                        break;
+
                     default:
                         Console.Write("\nIncorrect input. Try again!\n");
                         break;
