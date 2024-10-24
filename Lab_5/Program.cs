@@ -44,8 +44,17 @@
                 while (!isValid)
                 {
                     Console.Write("\nWhat do you want to do?\n" +
-                    " 1 - add object\n 2 – output objects\n 3 – find object\n 4 – delete object\n 5 – demonstrate behavior\n 6 – demonstrate static method\n 0 – exit programs\n" +
-                    "Answer --> ");
+                                  " 1 - add object\n" +
+                                  " 2 – output objects\n" +
+                                  " 3 – find object\n" +
+                                  " 4 – delete object\n" +
+                                  " 5 – demonstrate behavior\n" +
+                                  " 6 – demonstrate static method\n" +
+                                  " 7 – Save collection of objects to file\n" +
+                                  " 8 – Read collection of objects from file\n" +
+                                  " 9 – Clear collection of objects\n" +
+                                  " 0 – exit programs\n" +
+                                  "Answer --> ");
                     string? input1 = Console.ReadLine();
 
                     if (int.TryParse(input1, out ans))
@@ -104,7 +113,7 @@
                                         int search_phone = int.Parse(Console.ReadLine()!);
                                         f = function.FindPhoneNumber(search_phone, patients);
                                     };
-                                    if (f == -1) 
+                                    if (f == -1)
                                     {
                                         Console.WriteLine("\nPatient wasn't found...");
                                         break;
