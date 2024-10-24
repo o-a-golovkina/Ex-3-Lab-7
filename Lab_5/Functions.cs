@@ -139,9 +139,13 @@ namespace Lab_7
                     Console.WriteLine("-----------------------------------------------");
                     Console.Write("\nInput a string with data of patient (name;surname;age;number;type;code) --> ");
                     string? str = Console.ReadLine();
-                    bool result = Patient.TryParse(str!, patients);
-                    if (patients[i] == null) throw new ArgumentException();
-                    if (result) Console.WriteLine($"\nResult of adding - {result}: " + patients[i].ToString());
+                    bool result = Patient.TryParse(str!, out Patient patient,patients);
+                    if (patient == null) throw new ArgumentException();
+                    if (result)
+                    {
+                        patients.Add(patient);
+                        Console.WriteLine($"\nResult of adding - {result}: " + patients[i].ToString());
+                    }
                 }
                 catch (ArgumentException) { Console.WriteLine("The patient wasn't added!"); repeat = true; }
             } while (repeat);

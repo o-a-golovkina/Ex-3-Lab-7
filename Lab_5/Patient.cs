@@ -188,7 +188,7 @@ namespace Lab_7
             return $"{Name};{Surname};{Age};{Number};{Type};{Code}";
         }
 
-        public static Patient Parse(string s, List<Patient> p)
+        public static Patient Parse(string s, List<Patient> patients)
         {
             PatientType t = 0;
             if (s == null) throw new NullReferenceException("The string is empty!");
@@ -200,17 +200,18 @@ namespace Lab_7
             if (short.Parse(parts[2]) < minAge) throw new FormatException("The age in incorrect format!");
             if (int.Parse(parts[3]) < 100000000 || int.Parse(parts[3]) > 999999999) throw new FormatException("The number in incorrect format!");
             if (!TypeIsValid(parts[4], ref t)) throw new FormatException("The type in incorrect format!");
-            if (!CheckCode(p, int.Parse(parts[5]))) throw new FormatException("The code in incorrect format!");
+            if (!CheckCode(patients, int.Parse(parts[5]))) throw new FormatException("The code in incorrect format!");
             return new Patient(parts[0], parts[1], short.Parse(parts[2]), int.Parse(parts[3]), t, int.Parse(parts[5]));
         }
 
-        public static bool TryParse(string s, List<Patient> p)
+        public static bool TryParse(string s, out Patient patient, List<Patient> patients)
         {
             bool valid = false;
+            patient = null!;
 
             try
             {
-                p.Add(Parse(s, p));
+                patient = Parse(s, patients);
                 valid = true;
             }
             catch (FormatException ex) { Console.WriteLine(ex.Message); }
