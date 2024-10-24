@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Lab_5.Patient">
+    <Position X="1.25" Y="0.5" Width="5.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAgAAAAAVIAEAUQkCAWAJQAFACEAAQAAAgAAOAA=</HashCode>
+      <FileName>Patient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Lab_5.PatientType">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAIAECAAA=</HashCode>
+      <FileName>PatientType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
