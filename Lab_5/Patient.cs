@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace Lab_7
 {
@@ -45,7 +45,17 @@ namespace Lab_7
         public string FullName
         {
             get { return $"{Name} {Surname}"; }
+            set
+            {
+                var parts = value.Split(' ');
+                if (parts.Length < 2)
+                    throw new FormatException("The full name must contain at least a name and a surname.");
+
+                Name = parts[0];
+                Surname = parts[1];
+            }
         }
+
         public short Age
         {
             get => age;
