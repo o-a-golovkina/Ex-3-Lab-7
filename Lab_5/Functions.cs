@@ -1,4 +1,5 @@
 ﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+using Newtonsoft.Json;
 
 namespace Lab_7
 {
@@ -136,7 +137,7 @@ namespace Lab_7
                     }
                     Console.WriteLine("\nCode of the patient must consist of 3 digits.");
                     Console.WriteLine("-----------------------------------------------");
-                    Console.Write("\nInput a string with data of patient (name,surname,age,number,type,code) --> ");
+                    Console.Write("\nInput a string with data of patient (name;surname;age;number;type;code) --> ");
                     string? str = Console.ReadLine();
                     bool result = Patient.TryParse(str!, patients);
                     if (patients[i] == null) throw new ArgumentException();
@@ -313,6 +314,17 @@ namespace Lab_7
             {
                 File.WriteAllLines(path, lines);
                 Console.WriteLine($"Check out the CSV file at: {Path.GetFullPath(path)}");
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+
+        public void SaveToFileJSON(List<Patient> patients, string path)
+        {
+            try
+            {
+                string jsonstring = JsonConvert.SerializeObject(patients);
+                File.WriteAllText(path, jsonstring);
+                Console.WriteLine($"Check out the JSON file at: {Path.GetFullPath(path)}");
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
         }

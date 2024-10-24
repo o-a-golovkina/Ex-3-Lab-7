@@ -208,8 +208,14 @@
                                         function.SaveToFileCSV(patients, pathcsv);
                                     else throw new Exception();
                                 }
-                                //else if (ans == 2)
-                                //    /*Function for json*/
+                                else if (ans == 2)
+                                {
+                                    Console.Write("Input the file name for saving (*.json) --> ");
+                                    string? pathjson = Console.ReadLine();
+                                    if (!string.IsNullOrEmpty(pathjson) && pathjson.Contains(".json"))
+                                        function.SaveToFileJSON(patients, pathjson);
+                                    else throw new Exception();
+                                }                                
                                 else
                                     throw new Exception();
                             }
