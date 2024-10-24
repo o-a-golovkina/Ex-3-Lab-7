@@ -9,9 +9,9 @@ namespace Lab_7
         public bool repeat = false;
         public short healthlevel;
 
-        public void AddPatient(int i, ref List<Patient> patients, int n)
+        public void AddPatient(ref List<Patient> patients, int n)
         {
-            if (i >= n) throw new IndexOutOfRangeException("\nError! You have reached your patient limit.");
+            if (Patient.Counter >= n) throw new IndexOutOfRangeException("\nError! You have reached your patient limit.");
 
             do
             {
@@ -20,8 +20,8 @@ namespace Lab_7
                 try
                 {
                     short ans = short.Parse(Console.ReadLine()!);
-                    if (ans == 1) OldMode(i, ref patients);
-                    else if (ans == 2) NewMode(i, ref patients);
+                    if (ans == 1) OldMode(Patient.Counter, ref patients);
+                    else if (ans == 2) NewMode(Patient.Counter, ref patients);
                     else
                     {
                         Console.WriteLine("\nIncorrect input. Try again!");

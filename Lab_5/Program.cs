@@ -20,8 +20,7 @@
             }
 
             List<Patient> patients = new List<Patient>();
-            Functions function = new();
-            int i = 0;
+            Functions function = new();;
             bool r;
 
             do
@@ -71,8 +70,7 @@
                     case 1:
                         try
                         {
-                            function.AddPatient(i, ref patients, N);
-                            i++;
+                            function.AddPatient(ref patients, N);
                         }
                         catch (IndexOutOfRangeException ex) { Console.WriteLine(ex.Message); }
                         catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -85,7 +83,7 @@
                         {
                             Console.WriteLine($"\nYOUR PATIENTS ({Patient.Counter}):");
                             Console.WriteLine("\nThe min age of patients: " + Patient.MinAge);
-                            for (int y = 0; y < i; y++)
+                            for (int y = 0; y < Patient.Counter; y++)
                                 function.OutputPatient(y, patients);
                         }
                         break;
@@ -148,7 +146,6 @@
                                 if (a == "Yes" || a == "yes" || a == "YES")
                                 {
                                     function.DeletePatient(f1, ref patients);
-                                    i--;
                                     Console.WriteLine("Patient WAS deleted.");
                                 }
                                 else if (a == "No" || a == "no" || a == "NO") { Console.WriteLine("Patient WASN'T deleted..."); break; }
@@ -169,7 +166,7 @@
                             repeat = false;
                             try
                             {
-                                function.CaseFive(i, ref patients);
+                                function.CaseFive(Patient.Counter, ref patients);
                             }
                             catch (FormatException ex) { Console.WriteLine(ex.Message); repeat = true; }
                             catch (Exception) { Console.WriteLine("Something went wrong... Try again!"); repeat = true; }
@@ -182,7 +179,7 @@
                             repeat = false;
                             try
                             {
-                                function.CaseSix(i, ref patients);
+                                function.CaseSix(Patient.Counter, ref patients);
                             }
                             catch (FormatException ex) { Console.WriteLine(ex.Message); repeat = true; }
                             catch (Exception) { Console.WriteLine("Something went wrong... Try again!"); repeat = true; }
