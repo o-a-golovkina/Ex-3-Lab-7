@@ -20,7 +20,7 @@
             }
 
             List<Patient> patients = new List<Patient>();
-            Functions function = new();;
+            Functions function = new();
             bool r;
 
             do
@@ -70,21 +70,21 @@
                     case 1:
                         try
                         {
-                            function.AddPatient(ref patients, N);
+                            function.AddPatient(ref patients!, N);
                         }
                         catch (IndexOutOfRangeException ex) { Console.WriteLine(ex.Message); }
                         catch (Exception ex) { Console.WriteLine(ex.Message); }
                         break;
 
                     case 2:
-                        if (patients[0] == null)
+                        if (Patient.Counter == 0)
                             Console.WriteLine("\nThe list is empty!");
                         else
                         {
                             Console.WriteLine($"\nYOUR PATIENTS ({Patient.Counter}):");
                             Console.WriteLine("\nThe min age of patients: " + Patient.MinAge);
-                            for (int y = 0; y < Patient.Counter; y++)
-                                function.OutputPatient(y, patients);
+                            foreach (var item in patients!)
+                                function.OutputPatient(patients.IndexOf(item), item);
                         }
                         break;
 
@@ -103,13 +103,13 @@
                                     {
                                         Console.Write("Input code to search --> ");
                                         int search_code = int.Parse(Console.ReadLine()!);
-                                        f = function.FindCode(search_code, patients);
+                                        f = function.FindCode(search_code, patients!);
                                     }
                                     else
                                     {
                                         Console.Write("Input phone number to search --> (+380)");
                                         int search_phone = int.Parse(Console.ReadLine()!);
-                                        f = function.FindPhoneNumber(search_phone, patients);
+                                        f = function.FindPhoneNumber(search_phone, patients!);
                                     };
                                     if (f == -1)
                                     {
@@ -117,7 +117,7 @@
                                         break;
                                     }
                                     Console.WriteLine();
-                                    function.OutputPatient(f, patients);
+                                    function.OutputPatient(f, patients![f]);
                                 }
                                 else throw new FormatException("Choose only 1 or 2!");
                             }
@@ -136,11 +136,11 @@
                                 int num = int.Parse(Console.ReadLine()!);
                                 Console.Write("Input the code of patient --> ");
                                 int code = int.Parse(Console.ReadLine()!);
-                                int f1 = function.FindNum(num, patients);
-                                int f2 = function.FindCode(code, patients);
+                                int f1 = function.FindNum(num, patients!);
+                                int f2 = function.FindCode(code, patients!);
                                 Console.WriteLine();
                                 if (f1 == -1 || f2 == -1) { Console.WriteLine("Patient wasn't found..."); break; }
-                                else function.OutputPatient(f1, patients);
+                                else function.OutputPatient(f1, patients![f1]);
                                 Console.Write($"DELETE the patient {patients[f1].FullName} (Yes/No) --> ");
                                 string? a = Console.ReadLine();
                                 if (a == "Yes" || a == "yes" || a == "YES")
@@ -166,7 +166,7 @@
                             repeat = false;
                             try
                             {
-                                function.CaseFive(Patient.Counter, ref patients);
+                                function.CaseFive(Patient.Counter, ref patients!);
                             }
                             catch (FormatException ex) { Console.WriteLine(ex.Message); repeat = true; }
                             catch (Exception) { Console.WriteLine("Something went wrong... Try again!"); repeat = true; }
@@ -179,7 +179,7 @@
                             repeat = false;
                             try
                             {
-                                function.CaseSix(Patient.Counter, ref patients);
+                                function.CaseSix(Patient.Counter, ref patients!);
                             }
                             catch (FormatException ex) { Console.WriteLine(ex.Message); repeat = true; }
                             catch (Exception) { Console.WriteLine("Something went wrong... Try again!"); repeat = true; }
@@ -202,7 +202,7 @@
                                     Console.Write("Input the file name for saving (*.csv) --> ");
                                     string? pathcsv = Console.ReadLine();
                                     if (!string.IsNullOrEmpty(pathcsv) && pathcsv.Contains(".csv"))
-                                        function.SaveToFileCSV(patients, pathcsv);
+                                        function.SaveToFileCSV(patients!, pathcsv);
                                     else throw new Exception();
                                 }
                                 else if (ans == 2)
@@ -210,9 +210,9 @@
                                     Console.Write("Input the file name for saving (*.json) --> ");
                                     string? pathjson = Console.ReadLine();
                                     if (!string.IsNullOrEmpty(pathjson) && pathjson.Contains(".json"))
-                                        function.SaveToFileJSON(patients, pathjson);
+                                        function.SaveToFileJSON(patients!, pathjson);
                                     else throw new Exception();
-                                }                                
+                                }
                                 else
                                     throw new Exception();
                             }
@@ -237,14 +237,37 @@
                                     string? pathcsv = Console.ReadLine();
                                     if (!string.IsNullOrEmpty(pathcsv) && pathcsv.Contains(".csv"))
                                     {
-                                        patients = function.ReadFromFileCSV(pathcsv);
-                                        Console.WriteLine("\nObjects from the file were added to collection!");
+                                        patients!.AddRange(function.ReadFromFileCSV(pathcsv));
                                     }
                                     else throw new Exception();
                                 }
+                                else if (ans == 2)
+                                {
+                                    Console.Write("Input the file name for reading (*.json) --> ");
+                                    string? pathjson = Console.ReadLine();
+                                    if (!string.IsNullOrEmpty(pathjson) && pathjson.Contains(".json"))
+                                    {
+                                        patients!.AddRange(function.ReadFromFileJSON(pathjson));
+                                    }
+                                    else throw new Exception();
+                                }
+                                else
+                                    throw new Exception();
+
+                                Console.WriteLine("\nReading has finished!");
                             }
                             catch (Exception) { Console.WriteLine("\nIncorrect input. Try again!"); repeat = true; }
                         } while (repeat);
+                        break;
+
+                    case 9:
+                        if (patients == null)
+                            Console.WriteLine("The list is empty!");
+                        else
+                        {
+                            patients.Clear();
+                            Console.WriteLine("All objects have been deleted from the list!");
+                        }
                         break;
 
                     default:
