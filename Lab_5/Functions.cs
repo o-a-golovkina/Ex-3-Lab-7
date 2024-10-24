@@ -340,11 +340,16 @@ namespace Lab_7
             {
                 List<string> lines = new List<string>();
                 lines = File.ReadAllLines(path).ToList();
+                int i = 0;
                 foreach (string item in lines)
                 {
+                    Console.Write($"\nLine[{i++}]: ");
                     bool result = Patient.TryParse(item, out Patient patient, patients);
                     if (result)
+                    {
                         patients.Add(patient);
+                        Console.Write("Is valid.\n");
+                    }                        
                 }
             }
             catch (IOException ex) { Console.WriteLine("Reading file error: " + ex.Message); }
