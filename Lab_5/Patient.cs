@@ -171,14 +171,14 @@ namespace Lab_7
 
         public override string ToString()
         {
-            return $"{Name},{Surname},{Age},{Number},{Type},{Code}";
+            return $"{Name};{Surname};{Age};{Number};{Type};{Code}";
         }
 
         public static Patient Parse(string s, List<Patient> p)
         {
             PatientType t = 0;
             if (s == null) throw new NullReferenceException("The string is empty!");
-            string[] parts = s.Split(',');
+            string[] parts = s.Split(';');
             if (parts.Length != 6) throw new FormatException("The string in incorrect format!");
             Regex regex1 = new Regex(@"^[a-zA-Z]{3,}$");
             if (parts[0] == "" || (!regex1.IsMatch(parts[0]))) throw new FormatException("The name in incorrect format!");
