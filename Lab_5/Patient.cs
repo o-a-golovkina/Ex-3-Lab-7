@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Lab_7
 {
@@ -28,6 +29,7 @@ namespace Lab_7
                 name = value;
             }
         }
+
         public string Surname
         {
             private get => surname;
@@ -38,6 +40,8 @@ namespace Lab_7
                 surname = value;
             }
         }
+
+        [JsonProperty(PropertyName = "Full name")]
         public string FullName
         {
             get { return $"{Name} {Surname}"; }
@@ -52,6 +56,8 @@ namespace Lab_7
                 age = value;
             }
         }
+
+        [JsonProperty(PropertyName = "Phone number")]
         public int Number
         {
             get => number;
@@ -62,20 +68,28 @@ namespace Lab_7
                 number = value;
             }
         }
+
+        [JsonProperty(PropertyName = "Patient type")]
         public PatientType Type
         {
             get => type;
             set => type = value;
         }
+
+        [JsonProperty(PropertyName = "Patient code")]
         public int Code
         {
             get => code;
             set => code = value;
         }
+
+        [JsonIgnore]
         public short Healthlevel { get; set; } = -1;
 
+        [JsonIgnore]
         public static int Counter => counter;
 
+        [JsonIgnore]
         public static short MinAge
         {
             get => minAge;
