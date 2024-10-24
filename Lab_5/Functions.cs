@@ -1,5 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Lab_7
 {
@@ -161,15 +160,15 @@ namespace Lab_7
             return code;
         }
 
-        public void OutputPatient(int i, List<Patient> p)
+        public void OutputPatient(int i, Patient p)
         {
-            Console.WriteLine($"\nPatient №{i + 1} \n-----------------------------------");
-            Console.WriteLine("Full name: " + p[i].FullName);
-            Console.WriteLine("Age: " + p[i].Age);
-            Console.WriteLine("Phone number: (+380)" + p[i].Number);
-            Console.WriteLine("Type of the patient: " + p[i].Type);
-            if (p[i].Healthlevel != -1) Console.WriteLine("The health level: " + p[i].Healthlevel);
-            Console.WriteLine("The code: " + p[i].Code);
+            Console.WriteLine($"\nPatient №{i+1} \n-----------------------------------");
+            Console.WriteLine("Full name: " + p.FullName);
+            Console.WriteLine("Age: " + p.Age);
+            Console.WriteLine("Phone number: (+380)" + p.Number);
+            Console.WriteLine("Type of the patient: " + p.Type);
+            if (p.Healthlevel != -1) Console.WriteLine("The health level: " + p.Healthlevel);
+            Console.WriteLine("The code: " + p.Code);
             Console.WriteLine();
         }
 
@@ -205,7 +204,7 @@ namespace Lab_7
             if (i == -1) Console.WriteLine("Patient wasn't found...");
             else
             {
-                OutputPatient(i, p);
+                OutputPatient(i, p[i]);
                 if (p[i].Healthlevel == -1)
                 {
                     Console.Write("Input the health level (0-100) --> ");
@@ -281,7 +280,7 @@ namespace Lab_7
             if (i == -1) Console.WriteLine("Patient wasn't found...");
             else
             {
-                OutputPatient(i, p);
+                OutputPatient(i, p[i]);
                 do
                 {
                     repeat = false;
@@ -349,13 +348,41 @@ namespace Lab_7
                     {
                         patients.Add(patient);
                         Console.Write("Is valid.\n");
-                    }                        
+                    }
                 }
             }
             catch (IOException ex) { Console.WriteLine("Reading file error: " + ex.Message); }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
 
             return patients;
+        }
+
+        public List<Patient> ReadFromFileJSON(string path)
+        {
+            List<Patient> patients = new List<Patient>();
+            try
+            {
+                string text = File.ReadAllText(path);
+                patients = JsonConvert.DeserializeObject<List<Patient>>(text)!;
+                //List<string> lines = File.ReadAllLines(path).ToList();
+                //int i = 0;
+                //foreach (string item in lines)
+                //{
+                //    Console.Write($"\nLine[{i++}]: ");
+                //    Patient? patient = JsonConvert.DeserializeObject<Patient?>(item);
+                //    if (patient != null)
+                //    {
+                //        patients.Add(patient);
+                //        Console.Write("Is valid.\n");
+                //    }
+                //    else
+                //        Console.Write("Is NOT valid.\n");
+                //}
+            }
+            catch (IOException ex) { Console.WriteLine("Reading file error: " + ex.Message); }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+            return patients!;
         }
     }
 }
