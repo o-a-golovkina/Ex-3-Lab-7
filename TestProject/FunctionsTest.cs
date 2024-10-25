@@ -68,5 +68,28 @@ namespace TestProject
             //Assert
             Assert.AreEqual(expectedResult, result);
         }
+
+        [TestMethod]
+        public void SaveToFileCSVTest()
+        {
+            //Arrange
+            List<Patient> patients = new List<Patient>
+            {
+                new Patient{ Name = "Marry", Surname = "Brown", Age = 36, Number = 123456789, Type = PatientType.ALLERGIC, Code = 123 },
+            };
+
+            string tempPath = Path.GetTempFileName();
+
+            //Act
+            Functions function = new Functions();
+            function.SaveToFileCSV(patients, tempPath);
+            var lines = File.ReadAllLines(tempPath);
+
+            //Assert
+            Assert.AreEqual(patients.Count, lines.Length);
+
+            if (File.Exists(tempPath))
+                File.Delete(tempPath);
+        }
     }
 }
