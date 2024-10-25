@@ -125,5 +125,42 @@ namespace TestProject
             if (File.Exists(tempPath))
                 File.Delete(tempPath);
         }
+
+        [TestMethod]
+        public void ReadToFileCSVTest()
+        {
+            //Arrange
+            List<Patient> expectedPatients = new List<Patient>
+            {
+                new Patient{ Name = "Marry", Surname = "Brown", Age = 36, Number = 123456789, Type = PatientType.ALLERGIC, Code = 123 },
+                new Patient { Name = "John", Surname = "Doe", Age = 45, Number = 987654321, Type = PatientType.DISABLED, Code = 456 }
+            };
+
+            string tempPath = Path.GetTempFileName();
+
+            File.WriteAllLines(tempPath, new[]
+            {
+                "Marry,Brown,36,123456789,ALLERGIC,123",
+                "John,Doe,45,987654321,DISABLED,456"
+            });
+
+            // Act
+            Functions function = new Functions();
+            var actualPatients = function.ReadFromFileCSV(tempPath);
+
+            // Assert
+            for (int i = 0; i < expectedPatients.Count; i++)
+            {
+                Assert.AreEqual(expectedPatients[i].FullName, actualPatients[i].FullName);
+                Assert.AreEqual(expectedPatients[i].Age, actualPatients[i].Age);
+                Assert.AreEqual(expectedPatients[i].Number, actualPatients[i].Number);
+                Assert.AreEqual(expectedPatients[i].Type, actualPatients[i].Type);
+                Assert.AreEqual(expectedPatients[i].Code, actualPatients[i].Code);
+            }
+
+            // Cleanup
+            if (File.Exists(tempPath))
+                File.Delete(tempPath);
+        }
     }
 }

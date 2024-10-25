@@ -1,4 +1,4 @@
-# Lab-6 Practice Work Adjustments
+# Lab-7 Serialization / Deserialization
 
 На основі отриманого на лекції 7 теоретичного матеріалу, програму для практичної роботи Lab-6 необхідно скорегувати наступним чином:
 
