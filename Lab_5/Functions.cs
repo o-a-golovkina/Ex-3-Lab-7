@@ -364,20 +364,6 @@ namespace Lab_7
             {
                 string text = File.ReadAllText(path);
                 patients = JsonConvert.DeserializeObject<List<Patient>>(text)!;
-                //List<string> lines = File.ReadAllLines(path).ToList();
-                //int i = 0;
-                //foreach (string item in lines)
-                //{
-                //    Console.Write($"\nLine[{i++}]: ");
-                //    Patient? patient = JsonConvert.DeserializeObject<Patient?>(item);
-                //    if (patient != null)
-                //    {
-                //        patients.Add(patient);
-                //        Console.Write("Is valid.\n");
-                //    }
-                //    else
-                //        Console.Write("Is NOT valid.\n");
-                //}
             }
             catch (IOException ex) { Console.WriteLine("Reading file error: " + ex.Message); }
             catch (Exception ex) { Console.WriteLine(ex.Message); }

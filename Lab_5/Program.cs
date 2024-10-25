@@ -266,7 +266,8 @@
                         else
                         {
                             patients.Clear();
-                            Console.WriteLine("All objects have been deleted from the list!");
+                            Patient.ResetCounter();
+                            Console.WriteLine("\nAll objects have been deleted from the list!");
                         }
                         break;
 
