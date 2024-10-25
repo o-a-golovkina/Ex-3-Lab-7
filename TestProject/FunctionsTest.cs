@@ -1,4 +1,5 @@
 ﻿using Lab_7;
+using Newtonsoft.Json;
 
 namespace TestProject
 {
@@ -87,6 +88,39 @@ namespace TestProject
 
             //Assert
             Assert.AreEqual(patients.Count, lines.Length);
+
+            if (File.Exists(tempPath))
+                File.Delete(tempPath);
+        }
+
+        [TestMethod]
+        public void SaveToFileJSONTest()
+        {
+            //Arrange
+            List<Patient> patients = new List<Patient>
+            {
+                new Patient{ Name = "Marry", Surname = "Brown", Age = 36, Number = 123456789, Type = PatientType.ALLERGIC, Code = 123 },
+                new Patient { Name = "John", Surname = "Doe", Age = 45, Number = 987654321, Type = PatientType.DISABLED, Code = 456 }
+            };
+
+            string tempPath = Path.GetTempFileName();
+
+            //Act
+            Functions function = new Functions();
+            function.SaveToFileJSON(patients, tempPath);
+            var text = File.ReadAllText(tempPath);
+            List<Patient> deserPatients = JsonConvert.DeserializeObject<List<Patient>>(text)!;
+
+            //Assert
+            Assert.AreEqual(patients.Count, deserPatients.Count);
+            for (int i = 0; i < patients.Count; i++)
+            {
+                Assert.AreEqual(patients[i].FullName, deserPatients[i].FullName);
+                Assert.AreEqual(patients[i].Age, deserPatients[i].Age);
+                Assert.AreEqual(patients[i].Number, deserPatients[i].Number);
+                Assert.AreEqual(patients[i].Type, deserPatients[i].Type);
+                Assert.AreEqual(patients[i].Code, deserPatients[i].Code);
+            }            
 
             if (File.Exists(tempPath))
                 File.Delete(tempPath);
