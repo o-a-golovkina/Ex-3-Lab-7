@@ -126,20 +126,20 @@ namespace TestProject
         }
 
         [TestMethod]
-        [DataRow("Marry,Brown,18")] //Incorrect number of parts
-        [DataRow(",Brown,25,123456789,PREGNANT,123")] //Incorrect part 0
-        [DataRow("M,Brown,25,123456789,PREGNANT,123")] //Incorrect part 0
-        [DataRow("Marry,,25,123456789,PREGNANT,123")] //Incorrect part 1
-        [DataRow("Marry,B,25,123456789,PREGNANT,123")] //Incorrect part 1
-        [DataRow("Marry,Brown,-9,123456789,PREGNANT,123")] //Incorrect part 2 (age < 0)
-        [DataRow("Marry,Brown,160,123456789,PREGNANT,123")] //Incorrect part 2 (age > 150)
-        [DataRow("Marry,Brown,25,12,PREGNANT,123")] //Incorrect part 3 (ID too short)
-        [DataRow("Marry,Brown,25,1000000000,PREGNANT,123")] //Incorrect part 3 (ID too large)
-        [DataRow("Marry,Brown,25,123456789,P,123")] //Incorrect part 4 (invalid status)
-        [DataRow("Marry,Brown,25,123456789,6,123")] //Incorrect part 4 (invalid status number)
-        [DataRow("Marry,Brown,25,123456789,PREGNANT,1")] //Incorrect part 5 (Code too small)
-        [DataRow("Marry,Brown,25,123456789,PREGNANT,1000")] //Incorrect part 5 (Code too large)
-        [DataRow("Marry,Brown,25,123456789,PREGNANT,521")] //Incorrect part 5 (duplicate Code)
+        [DataRow("Marry;Brown;18")] //Incorrect number of parts
+        [DataRow(";Brown;25;123456789;PREGNANT;123")] //Incorrect part 0
+        [DataRow("M;Brown;25;123456789;PREGNANT;123")] //Incorrect part 0
+        [DataRow("Marry;;25;123456789;PREGNANT;123")] //Incorrect part 1
+        [DataRow("Marry;B;25;123456789;PREGNANT;123")] //Incorrect part 1
+        [DataRow("Marry;Brown;-9;123456789;PREGNANT;123")] //Incorrect part 2 (age < 0)
+        [DataRow("Marry;Brown;160;123456789;PREGNANT;123")] //Incorrect part 2 (age > 150)
+        [DataRow("Marry;Brown;25;12;PREGNANT;123")] //Incorrect part 3 (ID too short)
+        [DataRow("Marry;Brown;25;1000000000;PREGNANT;123")] //Incorrect part 3 (ID too large)
+        [DataRow("Marry;Brown;25;123456789;P;123")] //Incorrect part 4 (invalid status)
+        [DataRow("Marry;Brown;25;123456789;6;123")] //Incorrect part 4 (invalid status number)
+        [DataRow("Marry;Brown;25;123456789;PREGNANT;1")] //Incorrect part 5 (Code too small)
+        [DataRow("Marry;Brown;25;123456789;PREGNANT;1000")] //Incorrect part 5 (Code too large)
+        [DataRow("Marry;Brown;25;123456789;PREGNANT;521")] //Incorrect part 5 (duplicate Code)
         public void ParseTest_IncorrectParts(string input)
         {
             //Arrange
@@ -154,11 +154,11 @@ namespace TestProject
         {
             //Arrange
             List<Patient> patients = new List<Patient>();
-            string s = "Marry,Brown,25,123456789,PREGNANT,521";
+            string s = "Marry;Brown;25;123456789;PREGNANT;521";
             Patient result = new Patient() { Name="Marry", Surname="Brown", Age=25, Number=123456789, Type=0, Code=521 };
 
             //Act
-            bool isSuccess = Patient.TryParse(s, patients);
+            bool isSuccess = Patient.TryParse(s, out Patient patient, patients);
 
             //Assert
             Assert.IsTrue(isSuccess);
@@ -183,7 +183,7 @@ namespace TestProject
                 Type = PatientType.PREGNANT,
                 Code = 123
             };
-            string expected = "Marry,Brown,35,123456789,PREGNANT,123";
+            string expected = "Marry;Brown;35;123456789;PREGNANT;123";
 
             //Act
             string actual = patient.ToString();
